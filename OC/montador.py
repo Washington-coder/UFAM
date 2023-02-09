@@ -93,10 +93,19 @@ def split_parametros(parametros):
     parametros = parametros.split(',')
     return parametros
 
+def complemento_de_2(valor):
+    separados = valor.split('-')
+    num = int(separados[1])
+    num2 = ~num ^ 0b11111111
+    return hex(num2 * -1)
+
 def insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
     byte1 = instrucoes[nomeDaInstrucao]
     registrador = str(parametros[0])
     valor = parametros[1]
+
+    if valor.find('-') != -1:
+        valor = complemento_de_2(valor)
     
     # Valida tanto o uso de registradores quanto o de enderecos
     if registrador in registradores:

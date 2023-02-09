@@ -1,5 +1,5 @@
     data r0,0x14
-    data r1,3
+    data r1,-1
     data r2,0
     data r3,0x01
 comparador:
