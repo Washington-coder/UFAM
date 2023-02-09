@@ -1,3 +1,5 @@
+import sys
+
 instrucoes = {
     'add': 8, 'shr': 9,
     'shl': 'a', 'not': 'b',
@@ -15,10 +17,6 @@ registradores = {
 }
 
 labels = {}
-
-codigoHexa = ['00' for i in range(256)]
-indexCodigoHexa = 0
-
 
 def separar_instrucao_de_parametro(linha):
     linha = linha.split()
@@ -165,66 +163,93 @@ def insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHe
     byte = str(instrucoes[nomeDaInstrucao]) + str(registradoresHexa)
     codigoHexa[indexCodigoHexa] = byte
     
+def escrever_no_arquivo(memory_file, codigoHexa):
+    with open(memory_file, 'w') as f:
+        f.write('v3.0 hex words plain\n')
+        x = 0
+        while x <= 255:
+            if (x+1)%16 != 0:
+                f.write(codigoHexa[x]+" ")
+            else:
+                f.write(codigoHexa[x])
+            if ((x+1)%16 == 0) & (x != 255):
+                f.write('\n')
+            x += 1
 
 # main
-with open("assembly.txt", "r") as arquivo:
-    codigoAssembly = arquivo.readlines()
-    preenche_endereco_labels(codigoAssembly)
-    for linha in codigoAssembly:
-        linhaAssembly = separar_instrucao_de_parametro(linha)
-        nomeDaInstrucao = linhaAssembly[0]
-        if (nomeDaInstrucao == 'jmp'):
-            endereco = linhaAssembly[1]
-            insere_tipo_J(endereco, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
-            indexCodigoHexa += 2    
-        elif (nomeDaInstrucao == 'jae'):
-            endereco = linhaAssembly[1]
-            insere_tipo_J(endereco, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
-            indexCodigoHexa += 2    
-        elif (nomeDaInstrucao == 'data'):
-            parametros = split_parametros(linhaAssembly[1])
-            insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
-            indexCodigoHexa += 2 
-        elif (nomeDaInstrucao == 'halt'):
-            codigoHexa[indexCodigoHexa] = instrucoes[nomeDaInstrucao]
-            indexCodigoHexa += 1
-            codigoHexa[indexCodigoHexa] = '1b'
-            indexCodigoHexa += 1    
-        elif (nomeDaInstrucao == 'st'):
-            parametros = split_parametros(linhaAssembly[1])
-            insere_tipo_St(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
-            indexCodigoHexa += 1    
-        elif (nomeDaInstrucao == 'add'):
-            parametros = split_parametros(linhaAssembly[1])
-            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
-            indexCodigoHexa += 1
-        elif (nomeDaInstrucao == 'not'):
-            parametros = split_parametros(linhaAssembly[1])
-            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
-            indexCodigoHexa += 1
-        elif (nomeDaInstrucao == 'shl'):
-            parametros = split_parametros(linhaAssembly[1])
-            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
-            indexCodigoHexa += 1
-        elif (nomeDaInstrucao == 'shr'):
-            parametros = split_parametros(linhaAssembly[1])
-            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
-            indexCodigoHexa += 1
-        elif (nomeDaInstrucao == 'and'):
-            parametros = split_parametros(linhaAssembly[1])
-            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
-            indexCodigoHexa += 1
-        elif (nomeDaInstrucao == 'or'):
-            parametros = split_parametros(linhaAssembly[1])
-            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
-            indexCodigoHexa += 1
-        elif (nomeDaInstrucao == 'xor'):
-            parametros = split_parametros(linhaAssembly[1])
-            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
-            indexCodigoHexa += 1
-        elif (nomeDaInstrucao == 'cmp'):
-            parametros = split_parametros(linhaAssembly[1])
-            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
-            indexCodigoHexa += 1
+def passa_arquivo_para_hexa(memory_file):
 
-print(codigoHexa)
+    codigoHexa = ['00' for i in range(256)]
+    indexCodigoHexa = 0
+    
+    with open(memory_file, "r") as arquivo:
+        codigoAssembly = arquivo.readlines()
+        preenche_endereco_labels(codigoAssembly)
+        for linha in codigoAssembly:
+            linhaAssembly = separar_instrucao_de_parametro(linha)
+            nomeDaInstrucao = linhaAssembly[0]
+            if (nomeDaInstrucao == 'jmp'):
+                endereco = linhaAssembly[1]
+                insere_tipo_J(endereco, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 2    
+            elif (nomeDaInstrucao == 'jae'):
+                endereco = linhaAssembly[1]
+                insere_tipo_J(endereco, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 2    
+            elif (nomeDaInstrucao == 'data'):
+                parametros = split_parametros(linhaAssembly[1])
+                insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 2 
+            elif (nomeDaInstrucao == 'halt'):
+                codigoHexa[indexCodigoHexa] = instrucoes[nomeDaInstrucao]
+                indexCodigoHexa += 1
+                codigoHexa[indexCodigoHexa] = '1b'
+                indexCodigoHexa += 1    
+            elif (nomeDaInstrucao == 'st'):
+                parametros = split_parametros(linhaAssembly[1])
+                insere_tipo_St(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 1    
+            elif (nomeDaInstrucao == 'add'):
+                parametros = split_parametros(linhaAssembly[1])
+                insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 1
+            elif (nomeDaInstrucao == 'not'):
+                parametros = split_parametros(linhaAssembly[1])
+                insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 1
+            elif (nomeDaInstrucao == 'shl'):
+                parametros = split_parametros(linhaAssembly[1])
+                insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 1
+            elif (nomeDaInstrucao == 'shr'):
+                parametros = split_parametros(linhaAssembly[1])
+                insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 1
+            elif (nomeDaInstrucao == 'and'):
+                parametros = split_parametros(linhaAssembly[1])
+                insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 1
+            elif (nomeDaInstrucao == 'or'):
+                parametros = split_parametros(linhaAssembly[1])
+                insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 1
+            elif (nomeDaInstrucao == 'xor'):
+                parametros = split_parametros(linhaAssembly[1])
+                insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 1
+            elif (nomeDaInstrucao == 'cmp'):
+                parametros = split_parametros(linhaAssembly[1])
+                insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 1
+    
+    return codigoHexa
+
+def main(asm_file, memory_file):
+    codigoHexa = passa_arquivo_para_hexa(asm_file)
+    escrever_no_arquivo(memory_file, codigoHexa)
+
+if __name__ == '__main__':
+    
+	assert len(sys.argv)==3, 'invalid number of input arguments'
+
+	main(sys.argv[1], sys.argv[2])
