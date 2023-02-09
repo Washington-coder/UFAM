@@ -1,5 +1,8 @@
 import sys
 
+# ALUNO: WASHINGTON ANTONIO MORENO RIEGA
+# MATRICULA: 22152254
+
 instrucoes = {
     'add': 8, 'shr': 9,
     'shl': 'a', 'not': 'b',
@@ -9,7 +12,7 @@ instrucoes = {
     'data': 2, 'jmpr': 3,
     'jmp': '40', 'jcaez': 5,
     'jae': '56','clf': 6,
-    'halt': '40'
+    'halt': '40', 'move': ''
 }
 
 registradores = {
@@ -176,6 +179,27 @@ def escrever_no_arquivo(memory_file, codigoHexa):
                 f.write('\n')
             x += 1
 
+# def insere_tipo_move(parametros, indexCodigoHexa, codigoHexa):
+#     registrador1 = parametros[0]
+#     registrador2 = parametros[1]
+
+#     parametrosXor = []
+
+#     parametrosXor.append(registrador2)
+#     parametrosXor.append(registrador2)
+
+#     insere_tipo_aritimetico_ou_logico(parametrosXor, 'xor', indexCodigoHexa, codigoHexa)
+#     indexCodigoHexa += 1
+
+#     parametrosAdd = []
+
+#     parametrosAdd.append(registrador1)
+#     parametrosAdd.append(registrador2)
+
+#     insere_tipo_aritimetico_ou_logico(parametrosAdd, 'add', indexCodigoHexa, codigoHexa)
+#     indexCodigoHexa += 1
+
+
 # main
 def passa_arquivo_para_hexa(memory_file):
 
@@ -203,7 +227,7 @@ def passa_arquivo_para_hexa(memory_file):
             elif (nomeDaInstrucao == 'halt'):
                 codigoHexa[indexCodigoHexa] = instrucoes[nomeDaInstrucao]
                 indexCodigoHexa += 1
-                codigoHexa[indexCodigoHexa] = '1b'
+                codigoHexa[indexCodigoHexa] = split_hexa(hex(indexCodigoHexa - 1))
                 indexCodigoHexa += 1    
             elif (nomeDaInstrucao == 'st'):
                 parametros = split_parametros(linhaAssembly[1])
@@ -241,6 +265,11 @@ def passa_arquivo_para_hexa(memory_file):
                 parametros = split_parametros(linhaAssembly[1])
                 insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
                 indexCodigoHexa += 1
+            # elif (nomeDaInstrucao == 'move'):
+            #     parametros = split_parametros(linhaAssembly[1])
+            #     insere_tipo_move(parametros, indexCodigoHexa, codigoHexa)
+            #     indexCodigoHexa += 2
+
     
     return codigoHexa
 
