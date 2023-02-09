@@ -5,9 +5,9 @@ instrucoes = {
     'xor': 'e', 'cmp': 'f',
     'ld': 0, 'st': 1,
     'data': 2, 'jmpr': 3,
-    'jmp': 40, 'jcaez': 5,
+    'jmp': '40', 'jcaez': 5,
     'jae': '56','clf': 6,
-    'halt': 40
+    'halt': '40'
 }
 
 registradores = {
@@ -109,6 +109,8 @@ def insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
     # Valida uso de valores em hexa
     if valor.find('x') != -1:
         valor = split_hexa(valor)
+    else:
+        valor = split_hexa(hex(int(valor)))
 
     if len(str(valor)) == 1:
         valor = '0' + str(valor)
