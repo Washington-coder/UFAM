@@ -3,10 +3,11 @@ instrucoes = {
     'shl': 0b1010, 'not': 0b1011,
     'and': 0b1100, 'or': 0b1101,
     'xor': 0b1110, 'cmp': 0b1111,
-    'ld': 0b0000, 'st': 0b0001,
+    'ld': 0, 'st': 1,
     'data': 2, 'jmpr': 0b0011,
     'jmp': 40, 'jcaez': 0b0101,
-    'jae': 56,'clf': 0b0110
+    'jae': 56,'clf': 0b0110,
+    'halt': 40
 }
 
 registradores = {
@@ -98,6 +99,8 @@ def insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
         registrador = registradores[registrador]
     elif registrador.find('x') != -1:
         registrador = split_hexa(registrador)
+    else:
+        exit('Registrador não existe')
     
     # Valida uso de valores em hexa
     if valor.find('x') != -1:
@@ -114,6 +117,26 @@ def insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
     codigoHexa[indexCodigoHexa] = byte2
     indexCodigoHexa += 1
 
+def split_binary(binary):
+    binary = binary.split('b')
+    binary = binary[1]
+    return binary
+
+def insere_tipo_St(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
+    registrador1 = split_binary(bin(registradores[parametros[0]]))
+    registrador2 = split_binary(bin(registradores[parametros[1]]))
+
+    if len(registrador1) == 1:
+        registrador1 = '0' + str(registrador1)
+    if len(registrador2) == 1:
+        registrador2 = '0' + str(registrador2)
+
+    registradoresHexa = str(registrador1) + str(registrador2)
+    registradoresHexa = split_hexa(hex(int(registradoresHexa,2)))
+
+    byte = str(instrucoes[nomeDaInstrucao]) + str(registradoresHexa)
+    codigoHexa[indexCodigoHexa] = byte
+    
 
 # main
 with open("assembly.txt", "r") as arquivo:
@@ -134,10 +157,15 @@ with open("assembly.txt", "r") as arquivo:
             parametros = split_parametros(linhaAssembly[1])
             insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
             indexCodigoHexa += 2 
-        # elif (tipoDeInstrucao == 'halt'):
-            
-            
-        # elif (tipoDeInstrucao == 'st'):
+        elif (nomeDaInstrucao == 'halt'):
+            codigoHexa[indexCodigoHexa] = instrucoes[nomeDaInstrucao]
+            indexCodigoHexa += 1
+            codigoHexa[indexCodigoHexa] = '1b'
+            indexCodigoHexa += 1    
+        elif (nomeDaInstrucao == 'st'):
+            parametros = split_parametros(linhaAssembly[1])
+            insere_tipo_St(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+            indexCodigoHexa += 1
             
         # elif (tipoDeInstrucao == 'add'):
             
@@ -154,18 +182,5 @@ with open("assembly.txt", "r") as arquivo:
         # elif (tipoDeInstrucao == 'xor'):
             
         # elif (tipoDeInstrucao == 'cmp'):
-            
-
-    # if tipoDeInstrucao == 'data': 
-    #     parametros = linhaAssembly[1].split(',')
-    #     registrador = parametros[0]
-    #     valor = parametros[1]
-    #     dataRegistrador = data_registrador_em_hexa(registrador)
-    #     hex_code[posicao_hex_code] = dataRegistrador
-    #     posicao_hex_code+=1
-    #     valorData = valor_data_hexa(valor)
-    #     hex_code[posicao_hex_code] = valorData
-    #     posicao_hex_code+=1
-    # elif tipoDeInstrucao == 'label':
         
 print(codigoHexa)
