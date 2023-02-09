@@ -179,25 +179,25 @@ def escrever_no_arquivo(memory_file, codigoHexa):
                 f.write('\n')
             x += 1
 
-# def insere_tipo_move(parametros, indexCodigoHexa, codigoHexa):
-#     registrador1 = parametros[0]
-#     registrador2 = parametros[1]
+def insere_tipo_move(parametros, indexCodigoHexa, codigoHexa):
+    registrador1 = parametros[0]
+    registrador2 = parametros[1]
 
-#     parametrosXor = []
+    parametrosXor = []
 
-#     parametrosXor.append(registrador2)
-#     parametrosXor.append(registrador2)
+    parametrosXor.append(registrador2)
+    parametrosXor.append(registrador2)
 
-#     insere_tipo_aritimetico_ou_logico(parametrosXor, 'xor', indexCodigoHexa, codigoHexa)
-#     indexCodigoHexa += 1
+    insere_tipo_aritimetico_ou_logico(parametrosXor, 'xor', indexCodigoHexa, codigoHexa)
+    indexCodigoHexa += 1
 
-#     parametrosAdd = []
+    parametrosAdd = []
 
-#     parametrosAdd.append(registrador1)
-#     parametrosAdd.append(registrador2)
+    parametrosAdd.append(registrador1)
+    parametrosAdd.append(registrador2)
 
-#     insere_tipo_aritimetico_ou_logico(parametrosAdd, 'add', indexCodigoHexa, codigoHexa)
-#     indexCodigoHexa += 1
+    insere_tipo_aritimetico_ou_logico(parametrosAdd, 'add', indexCodigoHexa, codigoHexa)
+    indexCodigoHexa += 1
 
 
 # main
@@ -265,10 +265,10 @@ def passa_arquivo_para_hexa(memory_file):
                 parametros = split_parametros(linhaAssembly[1])
                 insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
                 indexCodigoHexa += 1
-            # elif (nomeDaInstrucao == 'move'):
-            #     parametros = split_parametros(linhaAssembly[1])
-            #     insere_tipo_move(parametros, indexCodigoHexa, codigoHexa)
-            #     indexCodigoHexa += 2
+            elif (nomeDaInstrucao == 'move'):
+                parametros = split_parametros(linhaAssembly[1])
+                insere_tipo_move(parametros, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 2
 
     
     return codigoHexa
