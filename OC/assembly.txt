@@ -6,3 +6,4 @@ comparador:
     cmp r0,r1 # exemplo de comentário
     not r1,r1
     add r3,r1
+    st r1,r2

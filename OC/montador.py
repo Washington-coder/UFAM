@@ -8,7 +8,7 @@ instrucoes = {
     'shl': '1001', 'not': '1011',
     'and': '1100', 'or': '1101',
     'xor': '1110', 'cmp': '1111',
-    'ld': 0, 'st': 1,
+    'ld': '0000', 'st': '0001',
     'data': '001000', 'jmpr': 3,
     'jmp': '40', 'jcaez': 5,
     'jae': '56','clf': 6,
@@ -147,10 +147,10 @@ def passa_registradores_binario(parametros):
 
 def insere_tipo_St(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
     
-    registradoresHexa = passa_registradores_binario(parametros)
-    registradoresHexa = split_hexa(hex(int(registradoresHexa,2)))
+    registradoresBin= passa_registradores_binario(parametros)
 
-    byte = str(instrucoes[nomeDaInstrucao]) + str(registradoresHexa)
+    byte = instrucoes[nomeDaInstrucao] + registradoresBin
+    byte = split_hexa(hex(int(byte, 2)))
     codigoHexa[indexCodigoHexa] = byte
     
 def insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
