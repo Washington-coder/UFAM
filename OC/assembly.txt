@@ -19,5 +19,6 @@ linha2:
     st r1,r2
     data r1,0x29
     st r1,r0
-    move r2,r1
+    out addr,r0
+    in addr,r2
     halt

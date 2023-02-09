@@ -12,7 +12,8 @@ instrucoes = {
     'data': 2, 'jmpr': 3,
     'jmp': '40', 'jcaez': 5,
     'jae': '56','clf': 6,
-    'halt': '40', 'move': ''
+    'halt': '40', 'in': '7',
+    'out': '7'
 }
 
 registradores = {
@@ -199,6 +200,32 @@ def insere_tipo_move(parametros, indexCodigoHexa, codigoHexa):
     insere_tipo_aritimetico_ou_logico(parametrosAdd, 'add', indexCodigoHexa, codigoHexa)
     indexCodigoHexa += 1
 
+def insere_tipo_in_out(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
+    tipo = parametros[0]
+    registrador = parametros[1]
+
+    binario = split_binary(bin(int(instrucoes[nomeDaInstrucao])))
+    if (nomeDaInstrucao == 'in'):
+        binario = str(binario) + '0'
+    elif(nomeDaInstrucao == 'out'):
+        binario = str(binario) + '1'
+
+    if (tipo == 'addr'):
+        binario = str(binario) + '1'
+    elif (tipo == 'data'):
+        binario = str(binario) + '0'
+
+    registradorBinario = split_binary(bin(registradores[registrador]))
+    if (len(registradorBinario) == 1):
+        registradorBinario = '0' + registradorBinario
+
+    binario = binario + registradorBinario
+    print(binario)
+    byte = split_hexa(hex(int(binario, 2)))
+
+    codigoHexa[indexCodigoHexa] = byte
+    indexCodigoHexa += 1    
+
 
 # main
 def passa_arquivo_para_hexa(memory_file):
@@ -269,6 +296,10 @@ def passa_arquivo_para_hexa(memory_file):
                 parametros = split_parametros(linhaAssembly[1])
                 insere_tipo_move(parametros, indexCodigoHexa, codigoHexa)
                 indexCodigoHexa += 2
+            elif (nomeDaInstrucao == 'in' or nomeDaInstrucao == 'out'):
+                parametros = split_parametros(linhaAssembly[1])
+                insere_tipo_in_out(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+                indexCodigoHexa += 1
 
     
     return codigoHexa
