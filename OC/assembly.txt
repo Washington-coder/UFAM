@@ -2,3 +2,21 @@
     data r1,3
     data r2,0
     data r3,0x01
+comparador:
+    cmp r0,r1
+    jae linha1
+    jmp linha2
+linha1: 
+    not r1,r1
+    add r3,r1
+    add r1,r0
+    not r1,r1
+    add r3,r1
+    add r3,r2
+    jmp comparador
+linha2:
+    data r1,0x28
+    st r1,r2
+    data r1,0x29
+    st r1,r0
+    halt
