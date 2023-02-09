@@ -9,7 +9,7 @@ instrucoes = {
     'and': 'c', 'or': 'd',
     'xor': 'e', 'cmp': 'f',
     'ld': 0, 'st': 1,
-    'data': 2, 'jmpr': 3,
+    'data': '001000', 'jmpr': 3,
     'jmp': '40', 'jcaez': 5,
     'jae': '56','clf': 6,
     'halt': '40', 'in': '7',
@@ -17,7 +17,7 @@ instrucoes = {
 }
 
 registradores = {
-    'r0': 0, 'r1': 1, 'r2': 2, 'r3': 3,
+    'r0': '00', 'r1': '01', 'r2': '10', 'r3': '11',
 }
 
 labels = {}
@@ -103,7 +103,7 @@ def complemento_de_2(valor):
 
 def insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
     byte1 = instrucoes[nomeDaInstrucao]
-    registrador = str(parametros[0])
+    registrador = parametros[0]
     valor = parametros[1]
 
     if valor.find('-') != -1:
@@ -112,8 +112,6 @@ def insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
     # Valida tanto o uso de registradores quanto o de enderecos
     if registrador in registradores:
         registrador = registradores[registrador]
-    elif registrador.find('x') != -1:
-        registrador = split_hexa(registrador)
     else:
         exit('Registrador não existe')
     
@@ -127,6 +125,7 @@ def insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
         valor = '0' + str(valor)
 
     byte1 = str(byte1) + str(registrador)
+    byte1 = split_hexa(hex(int(byte1,2)))
     byte2 = valor
 
     codigoHexa[indexCodigoHexa] = byte1
