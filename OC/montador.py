@@ -1,12 +1,12 @@
 instrucoes = {
-    'add': 0b1000, 'shr': 0b1001,
-    'shl': 0b1010, 'not': 0b1011,
-    'and': 0b1100, 'or': 0b1101,
-    'xor': 0b1110, 'cmp': 0b1111,
+    'add': 8, 'shr': 9,
+    'shl': 'a', 'not': 'b',
+    'and': 'c', 'or': 'd',
+    'xor': 'e', 'cmp': 'f',
     'ld': 0, 'st': 1,
-    'data': 2, 'jmpr': 0b0011,
-    'jmp': 40, 'jcaez': 0b0101,
-    'jae': 56,'clf': 0b0110,
+    'data': 2, 'jmpr': 3,
+    'jmp': 40, 'jcaez': 5,
+    'jae': '56','clf': 6,
     'halt': 40
 }
 
@@ -67,7 +67,11 @@ def busca_endereco(endereco):
         byte = endereco[1]
     else:
         if endereco in labels:
-            byte = labels[endereco] 
+            byte = labels[endereco]
+            byte = byte.split('x')
+            byte = byte[1]
+            if len(str(byte)) == 1:
+                byte = '0' + str(byte)
         else:
             exit('Não existe esse label: ' + str(endereco))
     return byte
@@ -122,7 +126,7 @@ def split_binary(binary):
     binary = binary[1]
     return binary
 
-def insere_tipo_St(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
+def passa_registradores_hexa(parametros):
     registrador1 = split_binary(bin(registradores[parametros[0]]))
     registrador2 = split_binary(bin(registradores[parametros[1]]))
 
@@ -132,6 +136,19 @@ def insere_tipo_St(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
         registrador2 = '0' + str(registrador2)
 
     registradoresHexa = str(registrador1) + str(registrador2)
+    return registradoresHexa
+
+def insere_tipo_St(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
+    
+    registradoresHexa = passa_registradores_hexa(parametros)
+    registradoresHexa = split_hexa(hex(int(registradoresHexa,2)))
+
+    byte = str(instrucoes[nomeDaInstrucao]) + str(registradoresHexa)
+    codigoHexa[indexCodigoHexa] = byte
+    
+def insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
+    
+    registradoresHexa = passa_registradores_hexa(parametros)
     registradoresHexa = split_hexa(hex(int(registradoresHexa,2)))
 
     byte = str(instrucoes[nomeDaInstrucao]) + str(registradoresHexa)
@@ -165,22 +182,38 @@ with open("assembly.txt", "r") as arquivo:
         elif (nomeDaInstrucao == 'st'):
             parametros = split_parametros(linhaAssembly[1])
             insere_tipo_St(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+            indexCodigoHexa += 1    
+        elif (nomeDaInstrucao == 'add'):
+            parametros = split_parametros(linhaAssembly[1])
+            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
             indexCodigoHexa += 1
-            
-        # elif (tipoDeInstrucao == 'add'):
-            
-        # elif (tipoDeInstrucao == 'shl'):
-            
-        # elif (tipoDeInstrucao == 'shr'):
-            
-        # elif (tipoDeInstrucao == 'not'):
-            
-        # elif (tipoDeInstrucao == 'and'):
-            
-        # elif (tipoDeInstrucao == 'or'):
-            
-        # elif (tipoDeInstrucao == 'xor'):
-            
-        # elif (tipoDeInstrucao == 'cmp'):
-        
+        elif (nomeDaInstrucao == 'not'):
+            parametros = split_parametros(linhaAssembly[1])
+            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+            indexCodigoHexa += 1
+        elif (nomeDaInstrucao == 'shl'):
+            parametros = split_parametros(linhaAssembly[1])
+            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+            indexCodigoHexa += 1
+        elif (nomeDaInstrucao == 'shr'):
+            parametros = split_parametros(linhaAssembly[1])
+            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+            indexCodigoHexa += 1
+        elif (nomeDaInstrucao == 'and'):
+            parametros = split_parametros(linhaAssembly[1])
+            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+            indexCodigoHexa += 1
+        elif (nomeDaInstrucao == 'or'):
+            parametros = split_parametros(linhaAssembly[1])
+            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+            indexCodigoHexa += 1
+        elif (nomeDaInstrucao == 'xor'):
+            parametros = split_parametros(linhaAssembly[1])
+            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+            indexCodigoHexa += 1
+        elif (nomeDaInstrucao == 'cmp'):
+            parametros = split_parametros(linhaAssembly[1])
+            insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
+            indexCodigoHexa += 1
+
 print(codigoHexa)
