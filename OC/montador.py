@@ -4,10 +4,10 @@ import sys
 # MATRICULA: 22152254
 
 instrucoes = {
-    'add': 8, 'shr': 9,
-    'shl': 'a', 'not': 'b',
-    'and': 'c', 'or': 'd',
-    'xor': 'e', 'cmp': 'f',
+    'add': '1000', 'shr': '1010',
+    'shl': '1001', 'not': '1011',
+    'and': '1100', 'or': '1101',
+    'xor': '1110', 'cmp': '1111',
     'ld': 0, 'st': 1,
     'data': '001000', 'jmpr': 3,
     'jmp': '40', 'jcaez': 5,
@@ -138,21 +138,16 @@ def split_binary(binary):
     binary = binary[1]
     return binary
 
-def passa_registradores_hexa(parametros):
-    registrador1 = split_binary(bin(registradores[parametros[0]]))
-    registrador2 = split_binary(bin(registradores[parametros[1]]))
+def passa_registradores_binario(parametros):
+    registrador1 = registradores[parametros[0]]
+    registrador2 = registradores[parametros[1]]
 
-    if len(registrador1) == 1:
-        registrador1 = '0' + str(registrador1)
-    if len(registrador2) == 1:
-        registrador2 = '0' + str(registrador2)
-
-    registradoresHexa = str(registrador1) + str(registrador2)
-    return registradoresHexa
+    registradoresBin = str(registrador1) + str(registrador2)
+    return registradoresBin
 
 def insere_tipo_St(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
     
-    registradoresHexa = passa_registradores_hexa(parametros)
+    registradoresHexa = passa_registradores_binario(parametros)
     registradoresHexa = split_hexa(hex(int(registradoresHexa,2)))
 
     byte = str(instrucoes[nomeDaInstrucao]) + str(registradoresHexa)
@@ -160,10 +155,10 @@ def insere_tipo_St(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
     
 def insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
     
-    registradoresHexa = passa_registradores_hexa(parametros)
-    registradoresHexa = split_hexa(hex(int(registradoresHexa,2)))
+    registradoresBin = passa_registradores_binario(parametros)
 
-    byte = str(instrucoes[nomeDaInstrucao]) + str(registradoresHexa)
+    byte = instrucoes[nomeDaInstrucao] + registradoresBin
+    byte = split_hexa(hex(int(byte, 2)))
     codigoHexa[indexCodigoHexa] = byte
     
 def escrever_no_arquivo(memory_file, codigoHexa):
