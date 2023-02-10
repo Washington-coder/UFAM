@@ -4,20 +4,20 @@ import sys
 # MATRICULA: 22152254
 
 instrucoes = {
-    'add': 8, 'shr': 9,
-    'shl': 'a', 'not': 'b',
-    'and': 'c', 'or': 'd',
-    'xor': 'e', 'cmp': 'f',
-    'ld': 0, 'st': 1,
-    'data': 2, 'jmpr': 3,
-    'jmp': '40', 'jcaez': 5,
-    'jae': '56','clf': 6,
-    'halt': '40', 'in': '7',
-    'out': '7'
+    'add': '1000', 'shr': '1010',
+    'shl': '1001', 'not': '1011',
+    'and': '1100', 'or': '1101',
+    'xor': '1110', 'cmp': '1111',
+    'ld': '0000', 'st': '0001',
+    'data': '001000',
+    'jmp': '01000000', 'jcaez': '01010111',
+    'jae': '01010110','clf': '01100000',
+    'halt': '01000000', 'in': '0111',
+    'out': '0111'
 }
 
 registradores = {
-    'r0': 0, 'r1': 1, 'r2': 2, 'r3': 3,
+    'r0': '00', 'r1': '01', 'r2': '10', 'r3': '11',
 }
 
 labels = {}
@@ -79,7 +79,7 @@ def busca_endereco(endereco):
     return byte
 
 def insere_tipo_J(endereco, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
-    byte1 = instrucoes[nomeDaInstrucao]
+    byte1 = split_hexa(hex(int(instrucoes[nomeDaInstrucao],2)))
     byte2 = busca_endereco(endereco)
     codigoHexa[indexCodigoHexa] = byte1
     indexCodigoHexa += 1
@@ -103,7 +103,7 @@ def complemento_de_2(valor):
 
 def insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
     byte1 = instrucoes[nomeDaInstrucao]
-    registrador = str(parametros[0])
+    registrador = parametros[0]
     valor = parametros[1]
 
     if valor.find('-') != -1:
@@ -112,8 +112,6 @@ def insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
     # Valida tanto o uso de registradores quanto o de enderecos
     if registrador in registradores:
         registrador = registradores[registrador]
-    elif registrador.find('x') != -1:
-        registrador = split_hexa(registrador)
     else:
         exit('Registrador não existe')
     
@@ -127,6 +125,7 @@ def insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
         valor = '0' + str(valor)
 
     byte1 = str(byte1) + str(registrador)
+    byte1 = split_hexa(hex(int(byte1,2)))
     byte2 = valor
 
     codigoHexa[indexCodigoHexa] = byte1
@@ -139,32 +138,27 @@ def split_binary(binary):
     binary = binary[1]
     return binary
 
-def passa_registradores_hexa(parametros):
-    registrador1 = split_binary(bin(registradores[parametros[0]]))
-    registrador2 = split_binary(bin(registradores[parametros[1]]))
+def passa_registradores_binario(parametros):
+    registrador1 = registradores[parametros[0]]
+    registrador2 = registradores[parametros[1]]
 
-    if len(registrador1) == 1:
-        registrador1 = '0' + str(registrador1)
-    if len(registrador2) == 1:
-        registrador2 = '0' + str(registrador2)
-
-    registradoresHexa = str(registrador1) + str(registrador2)
-    return registradoresHexa
+    registradoresBin = str(registrador1) + str(registrador2)
+    return registradoresBin
 
 def insere_tipo_St(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
     
-    registradoresHexa = passa_registradores_hexa(parametros)
-    registradoresHexa = split_hexa(hex(int(registradoresHexa,2)))
+    registradoresBin= passa_registradores_binario(parametros)
 
-    byte = str(instrucoes[nomeDaInstrucao]) + str(registradoresHexa)
+    byte = instrucoes[nomeDaInstrucao] + registradoresBin
+    byte = split_hexa(hex(int(byte, 2)))
     codigoHexa[indexCodigoHexa] = byte
     
 def insere_tipo_aritimetico_ou_logico(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
     
-    registradoresHexa = passa_registradores_hexa(parametros)
-    registradoresHexa = split_hexa(hex(int(registradoresHexa,2)))
+    registradoresBin = passa_registradores_binario(parametros)
 
-    byte = str(instrucoes[nomeDaInstrucao]) + str(registradoresHexa)
+    byte = instrucoes[nomeDaInstrucao] + registradoresBin
+    byte = split_hexa(hex(int(byte, 2)))
     codigoHexa[indexCodigoHexa] = byte
     
 def escrever_no_arquivo(memory_file, codigoHexa):
@@ -204,7 +198,7 @@ def insere_tipo_in_out(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
     tipo = parametros[0]
     registrador = parametros[1]
 
-    binario = split_binary(bin(int(instrucoes[nomeDaInstrucao])))
+    binario = instrucoes[nomeDaInstrucao]
     if (nomeDaInstrucao == 'in'):
         binario = str(binario) + '0'
     elif(nomeDaInstrucao == 'out'):
@@ -215,12 +209,9 @@ def insere_tipo_in_out(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
     elif (tipo == 'data'):
         binario = str(binario) + '0'
 
-    registradorBinario = split_binary(bin(registradores[registrador]))
-    if (len(registradorBinario) == 1):
-        registradorBinario = '0' + registradorBinario
+    registradorBinario = registradores[registrador]
 
     binario = binario + registradorBinario
-    print(binario)
     byte = split_hexa(hex(int(binario, 2)))
 
     codigoHexa[indexCodigoHexa] = byte
@@ -252,7 +243,7 @@ def passa_arquivo_para_hexa(memory_file):
                 insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
                 indexCodigoHexa += 2 
             elif (nomeDaInstrucao == 'halt'):
-                codigoHexa[indexCodigoHexa] = instrucoes[nomeDaInstrucao]
+                codigoHexa[indexCodigoHexa] = split_hexa(hex(int(instrucoes[nomeDaInstrucao],2)))
                 indexCodigoHexa += 1
                 codigoHexa[indexCodigoHexa] = split_hexa(hex(indexCodigoHexa - 1))
                 indexCodigoHexa += 1    
