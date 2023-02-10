@@ -12,8 +12,8 @@ instrucoes = {
     'data': '001000',
     'jmp': '01000000', 'jcaez': '01010111',
     'jae': '01010110','clf': '01100000',
-    'halt': '01000000', 'in': '7',
-    'out': '7'
+    'halt': '01000000', 'in': '0111',
+    'out': '0111'
 }
 
 registradores = {
@@ -198,7 +198,7 @@ def insere_tipo_in_out(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
     tipo = parametros[0]
     registrador = parametros[1]
 
-    binario = split_binary(bin(int(instrucoes[nomeDaInstrucao])))
+    binario = instrucoes[nomeDaInstrucao]
     if (nomeDaInstrucao == 'in'):
         binario = str(binario) + '0'
     elif(nomeDaInstrucao == 'out'):
@@ -209,12 +209,9 @@ def insere_tipo_in_out(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
     elif (tipo == 'data'):
         binario = str(binario) + '0'
 
-    registradorBinario = split_binary(bin(registradores[registrador]))
-    if (len(registradorBinario) == 1):
-        registradorBinario = '0' + registradorBinario
+    registradorBinario = registradores[registrador]
 
     binario = binario + registradorBinario
-    print(binario)
     byte = split_hexa(hex(int(binario, 2)))
 
     codigoHexa[indexCodigoHexa] = byte
