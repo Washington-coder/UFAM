@@ -9,9 +9,9 @@ instrucoes = {
     'and': '1100', 'or': '1101',
     'xor': '1110', 'cmp': '1111',
     'ld': '0000', 'st': '0001',
-    'data': '001000', 'jmpr': 3,
-    'jmp': '40', 'jcaez': 5,
-    'jae': '56','clf': 6,
+    'data': '001000',
+    'jmp': '01000000', 'jcaez': '01010111',
+    'jae': '01010110','clf': 6,
     'halt': '40', 'in': '7',
     'out': '7'
 }
@@ -79,7 +79,7 @@ def busca_endereco(endereco):
     return byte
 
 def insere_tipo_J(endereco, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
-    byte1 = instrucoes[nomeDaInstrucao]
+    byte1 = split_hexa(hex(int(instrucoes[nomeDaInstrucao],2)))
     byte2 = busca_endereco(endereco)
     codigoHexa[indexCodigoHexa] = byte1
     indexCodigoHexa += 1
