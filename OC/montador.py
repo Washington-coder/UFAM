@@ -291,6 +291,20 @@ def passa_arquivo_para_hexa(memory_file):
                 parametros = split_parametros(linhaAssembly[1])
                 insere_tipo_in_out(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
                 indexCodigoHexa += 1
+            elif (nomeDaInstrucao == '.word'):
+                parametro = linhaAssembly[1]
+                if parametro.find('x') != -1:
+                    parametro = split_hexa(linhaAssembly[1])
+                elif parametro.find('-') != -1:
+                    parametro = split_hexa(complemento_de_2(parametro))
+                else:
+                    parametro = split_hexa(hex(int(parametro)))
+
+                if len(str(parametro)) == 1:
+                    parametro = '0' + parametro
+                
+                codigoHexa[indexCodigoHexa] = parametro
+                indexCodigoHexa += 1
 
     
     return codigoHexa
