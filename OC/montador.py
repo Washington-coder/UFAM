@@ -301,6 +301,10 @@ def passa_arquivo_para_hexa(memory_file):
                 parametros = split_parametros(linhaAssembly[1])
                 insere_tipo_move(parametros, indexCodigoHexa, codigoHexa)
                 indexCodigoHexa += 2
+            elif (nomeDaInstrucao == 'clf'):
+                hexa = split_hexa(hex(int(instrucoes[nomeDaInstrucao],2)))
+                codigoHexa[indexCodigoHexa] = hexa
+                indexCodigoHexa += 1
             elif (nomeDaInstrucao == 'in' or nomeDaInstrucao == 'out'):
                 parametros = split_parametros(linhaAssembly[1])
                 insere_tipo_in_out(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
