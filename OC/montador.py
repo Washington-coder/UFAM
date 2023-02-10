@@ -11,8 +11,8 @@ instrucoes = {
     'ld': '0000', 'st': '0001',
     'data': '001000',
     'jmp': '01000000', 'jcaez': '01010111',
-    'jae': '01010110','clf': 6,
-    'halt': '40', 'in': '7',
+    'jae': '01010110','clf': '01100000',
+    'halt': '01000000', 'in': '7',
     'out': '7'
 }
 
@@ -246,7 +246,7 @@ def passa_arquivo_para_hexa(memory_file):
                 insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa)
                 indexCodigoHexa += 2 
             elif (nomeDaInstrucao == 'halt'):
-                codigoHexa[indexCodigoHexa] = instrucoes[nomeDaInstrucao]
+                codigoHexa[indexCodigoHexa] = split_hexa(hex(int(instrucoes[nomeDaInstrucao],2)))
                 indexCodigoHexa += 1
                 codigoHexa[indexCodigoHexa] = split_hexa(hex(indexCodigoHexa - 1))
                 indexCodigoHexa += 1    

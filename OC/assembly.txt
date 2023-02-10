@@ -16,3 +16,4 @@ linha1:
     jmp comparador
 linha2:
 compardor:
+    halt
