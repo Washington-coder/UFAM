@@ -61,6 +61,18 @@ def preenche_endereco_labels(codigoAssembly):
             addr += 1
         elif (tipoDeInstrucao == 'cmp'):
             addr += 1
+        elif (tipoDeInstrucao == 'move'):
+            addr += 2
+        elif (tipoDeInstrucao == 'in'):
+            addr += 1
+        elif (tipoDeInstrucao == 'out'):
+            addr += 1
+        elif (tipoDeInstrucao == 'clf'):
+            addr += 1
+        elif (tipoDeInstrucao == 'ld'):
+            addr += 1
+        elif (tipoDeInstrucao == 'st'):
+            addr += 1
 
 def busca_endereco(endereco):
     byte = ''
@@ -116,7 +128,9 @@ def insere_tipo_Data(parametros, nomeDaInstrucao, indexCodigoHexa, codigoHexa):
         exit('Registrador não existe')
     
     # Valida uso de valores em hexa
-    if valor.find('x') != -1:
+    if valor in labels:
+        valor = split_hexa(labels[valor])
+    elif valor.find('x') != -1:
         valor = split_hexa(valor)
     else:
         valor = split_hexa(hex(int(valor)))
@@ -306,7 +320,6 @@ def passa_arquivo_para_hexa(memory_file):
                 codigoHexa[indexCodigoHexa] = parametro
                 indexCodigoHexa += 1
 
-    
     return codigoHexa
 
 def main(asm_file, memory_file):
