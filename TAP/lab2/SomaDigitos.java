@@ -2,32 +2,23 @@ import java.util.Scanner;
 
 public class SomaDigitos {
     public static void main(String[] args) {
-        int n, baseDez = 1, subRestoAnt, resto = 0, digito = 0, soma = 0;
+        int n, baseDez = 10, divisorAux = 1, resto, digito, soma = 0;
         Scanner scan = new Scanner(System.in);
 
         n = scan.nextInt();
 
         scan.close();
 
-        while(n >= baseDez) {
-            // System.out.println(n % baseDez);
-            if (baseDez == 1){
-                digito = n % baseDez;
-                // System.out.println(digito);
-            }else{
-                subRestoAnt = (n % baseDez) - resto;
-                System.out.println("subRestoAnt " + subRestoAnt);
-                System.out.println("baseDez " + baseDez);
-                digito = subRestoAnt/baseDez;
-                // System.out.println("digito " + digito);
-                // System.out.println(digito);
-                // subRestoAnt = n - (n % baseDez);
-                // digito = baseDezSub/baseDez;
-            }
-            soma += digito;
+        while(n > baseDez) {
             resto = n % baseDez;
-            baseDez = baseDez * 10;
+            digito = resto/divisorAux;
+            soma += digito;
+            divisorAux *= 10;
+            baseDez *= 10;
+            n -= resto;
         }
-        // System.out.println(soma);
+        digito = n/divisorAux;
+        soma += digito;
+        System.out.println(soma);
     }
 }
