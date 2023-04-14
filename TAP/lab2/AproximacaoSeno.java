@@ -11,10 +11,6 @@ public class AproximacaoSeno {
     }
 
     public static double getElementDivision(Double x, Double n){
-        // System.out.println(n);
-        // System.out.println(Math.pow(x, n));
-        // System.out.println(fatorial(n));
-        // System.out.println(Math.pow(x, n)/fatorial(n));
         return (Math.pow(x, n)/fatorial(n));
     }
     public static void main(String[] args) {
@@ -24,6 +20,7 @@ public class AproximacaoSeno {
         Scanner scan = new Scanner(System.in);
 
         x = scan.nextDouble();
+        x = Math.toRadians(x);
         n = scan.nextInt();
 
         scan.close();
@@ -34,11 +31,9 @@ public class AproximacaoSeno {
             }else{
                 if (i % 2 != 0){
                     double index = i + 2;
-                    // System.out.println(getElementDivision(x,index));
                     seno -= getElementDivision(x,index);
                 }else{
                     double index = i + 2;
-                    // System.out.println(getElementDivision(x,index));
                     seno += getElementDivision(x,index);
                 }
             }
