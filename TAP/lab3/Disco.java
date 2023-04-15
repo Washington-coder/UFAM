@@ -1,4 +1,5 @@
-class Disco {
+package lab3;
+public class Disco {
     String marca;
     String tipo;
     double capacidade;

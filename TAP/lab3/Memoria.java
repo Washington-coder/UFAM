@@ -1,3 +1,4 @@
+package lab3;
 class Memoria {
     String marca;
     String tipo;
