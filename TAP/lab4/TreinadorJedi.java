@@ -1,4 +1,6 @@
-class TreinadorJedi {
+
+
+public class TreinadorJedi {
     String titulacao;
     String nome;
 

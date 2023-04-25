@@ -1,12 +1,11 @@
 
-
 public class IniciadoJedi {
     String nome;
     String especie;
     int anoNascimento;
 
     String getDescricao() {
-        return this.nome + "(especie="+ this.especie + ", nascimento=" + getAnoNascimento() + ")"; 
+        return this.nome + " (especie="+ this.especie + ", nascimento=" + getAnoNascimento() + ")"; 
     }
 
     String getAnoNascimento() {
