@@ -4,11 +4,7 @@
  */
 package com.mycompany.alunos;
 
-import com.mycompany.productcrud.productForm;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import com.mycompany.connection.ConnectionJdbc;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -31,65 +27,50 @@ public class AlunoView extends javax.swing.JFrame {
     public AlunoView(Integer id) {
         professor_id = id;
         initComponents();
-        Connect();
+        jdbc.Connect();
         Fetch();
         LoadProductNo();
     }
     
-    Connection con;
-    PreparedStatement pst;
-    ResultSet rs;
-    
-    public void Connect(){
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/javacrud","root","Was120603@");
-        } catch(ClassNotFoundException ex) {
-            System.out.println("Driver do JDBC não encontrado !");
-            ex.printStackTrace();
-        } catch(SQLException ex){
-            System.out.println("Falha ao conectar ao banco de dados!");
-            ex.printStackTrace();
-        } 
-    }
+    ConnectionJdbc jdbc = new ConnectionJdbc();
     
     public void LoadProductNo(){
         try {
-            pst = con.prepareStatement("SELECT id FROM alunos");
-            rs = pst.executeQuery();
+            jdbc.pst = jdbc.con.prepareStatement("SELECT id FROM alunos");
+            jdbc.rs = jdbc.pst.executeQuery();
             txtpid.removeAllItems();
-            while(rs.next()){
-                txtpid.addItem(rs.getString(1));
+            while(jdbc.rs.next()){
+                txtpid.addItem(jdbc.rs.getString(1));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(productForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AlunoView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     private void Fetch(){
         int q;
         try {
-            pst = con.prepareStatement("SELECT * FROM alunos WHERE id_tabela_aluno_prof=?");
-            pst.setInt(1, professor_id);
-            rs = pst.executeQuery();
-            ResultSetMetaData rss = rs.getMetaData();
+            jdbc.pst = jdbc.con.prepareStatement("SELECT * FROM alunos WHERE id_tabela_aluno_prof=?");
+            jdbc.pst.setInt(1, professor_id);
+            jdbc.rs = jdbc.pst.executeQuery();
+            ResultSetMetaData rss = jdbc.rs.getMetaData();
             q = rss.getColumnCount();
             DefaultTableModel df = (DefaultTableModel)jTable1.getModel(); 
             df.setRowCount(0);
-            while(rs.next()){
+            while(jdbc.rs.next()){
                 Vector v2 = new Vector();
                 for(int a=1; a<=q; a++){
-                    v2.add(rs.getString("id"));
-                    v2.add(rs.getString("nome"));
-                    v2.add(rs.getString("matricula"));
-                    v2.add(rs.getString("periodo"));
-                    v2.add(rs.getString("tipo_aluno"));
-                    v2.add(rs.getString("idade"));
+                    v2.add(jdbc.rs.getString("id"));
+                    v2.add(jdbc.rs.getString("nome"));
+                    v2.add(jdbc.rs.getString("matricula"));
+                    v2.add(jdbc.rs.getString("periodo"));
+                    v2.add(jdbc.rs.getString("tipo_aluno"));
+                    v2.add(jdbc.rs.getString("idade"));
                 }
                 df.addRow(v2);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(productForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AlunoView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -143,7 +124,7 @@ public class AlunoView extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nome", "Matrícula", "Tipo de Aluno", "Idade", "Período"
+                "ID", "Nome", "Matrícula", "Período", "Tipo de Aluno", "Idade"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -275,15 +256,15 @@ public class AlunoView extends javax.swing.JFrame {
         
         
         try {
-            pst = con.prepareStatement("INSERT INTO alunos (id_tabela_aluno_prof,nome,matricula,periodo,tipo_aluno,idade)VALUES(?,?,?,?,?,?)");
-            pst.setInt(1, professor_id);
-            pst.setString(2, nome); 
-            pst.setString(3, matricula);
-            pst.setInt(4, periodo);
-            pst.setString(5, tipoAluno);
-            pst.setFloat(6, idade);
+            jdbc.pst = jdbc.con.prepareStatement("INSERT INTO alunos (id_tabela_aluno_prof,nome,matricula,periodo,tipo_aluno,idade)VALUES(?,?,?,?,?,?)");
+            jdbc.pst.setInt(1, professor_id);
+            jdbc.pst.setString(2, nome); 
+            jdbc.pst.setString(3, matricula);
+            jdbc.pst.setInt(4, periodo);
+            jdbc.pst.setString(5, tipoAluno);
+            jdbc.pst.setFloat(6, idade);
             
-            int k = pst.executeUpdate();
+            int k = jdbc.pst.executeUpdate();
             
             if (k == 1){
                 JOptionPane.showMessageDialog(this, "Aluno cadastrado com sucesso !");
@@ -298,7 +279,7 @@ public class AlunoView extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Houve um erro ao cadastrar a disciplina");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(productForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AlunoView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnCadastraActionPerformed
 
@@ -311,15 +292,15 @@ public class AlunoView extends javax.swing.JFrame {
         Integer idade = Integer.parseInt(txtIdade.getText());
         
         try {
-            pst = con.prepareStatement("UPDATE professor SET nome=?,matricula=?,periodo=?,tipo_aluno=?,idade=? WHERE id=?");
-           pst.setString(1, nome); 
-            pst.setString(2, matricula);
-            pst.setInt(3, periodo);
-            pst.setString(4, tipoAluno);
-            pst.setFloat(5, idade);
-            pst.setInt(6, professor_id);
+            jdbc.pst = jdbc.con.prepareStatement("UPDATE professor SET nome=?,matricula=?,periodo=?,tipo_aluno=?,idade=? WHERE id=?");
+           jdbc.pst.setString(1, nome); 
+            jdbc.pst.setString(2, matricula);
+            jdbc.pst.setInt(3, periodo);
+            jdbc.pst.setString(4, tipoAluno);
+            jdbc.pst.setFloat(5, idade);
+            jdbc.pst.setInt(6, professor_id);
             
-            int k = pst.executeUpdate();
+            int k = jdbc.pst.executeUpdate();
             if (k == 1){
                 JOptionPane.showMessageDialog(this, "O aluno foi editado com sucesso !!");
                 txtNome.setText("");
@@ -333,7 +314,7 @@ public class AlunoView extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Deu ruim no update");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(productForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AlunoView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnEditaActionPerformed
 
@@ -341,10 +322,10 @@ public class AlunoView extends javax.swing.JFrame {
         // TODO add your handling code here:
         String pid =  txtpid.getSelectedItem().toString();
         try {
-            pst = con.prepareStatement("DELETE FROM disciplina WHERE id=?");
-            pst.setString(1, pid);
+            jdbc.pst = jdbc.con.prepareStatement("DELETE FROM disciplina WHERE id=?");
+            jdbc.pst.setString(1, pid);
             
-            int k = pst.executeUpdate();
+            int k = jdbc.pst.executeUpdate();
             
             if (k == 1){
                 JOptionPane.showMessageDialog(this, "Aluno deletado com sucesso!");
@@ -360,7 +341,7 @@ public class AlunoView extends javax.swing.JFrame {
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(productForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AlunoView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDeletaActionPerformed
 

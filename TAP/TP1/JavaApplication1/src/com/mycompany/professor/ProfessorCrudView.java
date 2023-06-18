@@ -4,12 +4,8 @@
  */
 package com.mycompany.professor;
 
-import com.mycompany.productcrud.productForm;
+import com.mycompany.connection.ConnectionJdbc;
 import com.mycompany.rit.RitView;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -17,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -29,76 +26,35 @@ public class ProfessorCrudView extends javax.swing.JFrame {
      *
      */
     
+    ConnectionJdbc jdbc = new ConnectionJdbc();
+    private String pid;
     
     public ProfessorCrudView() {
         initComponents();
-        Connect();
-        LoadProductNo();
+        jdbc.Connect();
         Fetch();
-    }
-    
-    Connection con;
-    PreparedStatement pst;
-    ResultSet rs;
-    
-    public void Connect(){
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/javacrud","root","Was120603@");
-        } catch(ClassNotFoundException ex) {
-            System.out.println("Driver do JDBC não encontrado !");
-            ex.printStackTrace();
-        } catch(SQLException ex){
-            System.out.println("Falha ao conectar ao banco de dados!");
-            ex.printStackTrace();
-        } 
-    }
-    
-    public void closeConnection() {
-        try {
-            if (con != null && !con.isClosed()) {
-                con.close();
-                System.out.println("Conexão fechada com sucesso!");
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao fechar a conexão!");
-            e.printStackTrace();
-        }
-    }
-    
-    public void LoadProductNo(){
-        try {
-            pst = con.prepareStatement("SELECT id FROM professor");
-            rs = pst.executeQuery();
-            txtpid.removeAllItems();
-            while(rs.next()){
-                txtpid.addItem(rs.getString(1));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(productForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     private void Fetch(){
         int q;
         try {
-            pst = con.prepareStatement("SELECT * FROM professor");
-            rs = pst.executeQuery();
-            ResultSetMetaData rss = rs.getMetaData();
+            jdbc.pst = jdbc.con.prepareStatement("SELECT * FROM professor");
+            jdbc.rs = jdbc.pst.executeQuery();
+            ResultSetMetaData rss = jdbc.rs.getMetaData();
             q = rss.getColumnCount();
             DefaultTableModel df = (DefaultTableModel)jTable1.getModel(); 
             df.setRowCount(0);
-            while(rs.next()){
+            while(jdbc.rs.next()){
                 Vector v2 = new Vector();
                 for(int a=1; a<=q; a++){
-                    v2.add(rs.getString("id"));
-                    v2.add(rs.getString("nome"));
-                    v2.add(rs.getString("idade"));
+                    v2.add(jdbc.rs.getString("id"));
+                    v2.add(jdbc.rs.getString("nome"));
+                    v2.add(jdbc.rs.getString("idade"));
                 }
                 df.addRow(v2);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(productForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProfessorCrudView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -117,11 +73,8 @@ public class ProfessorCrudView extends javax.swing.JFrame {
         btnDeleta = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtpid = new javax.swing.JComboBox<>();
         txtNome = new javax.swing.JTextField();
         txtIdade = new javax.swing.JTextField();
-        btnPesquisa = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -156,22 +109,6 @@ public class ProfessorCrudView extends javax.swing.JFrame {
 
         jLabel3.setText("Idade:");
 
-        jLabel4.setText("Professor ID:");
-
-        txtpid.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6" }));
-        txtpid.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpidActionPerformed(evt);
-            }
-        });
-
-        btnPesquisa.setText("Pesquisar");
-        btnPesquisa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPesquisaActionPerformed(evt);
-            }
-        });
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -183,6 +120,11 @@ public class ProfessorCrudView extends javax.swing.JFrame {
                 "Professor ID", "Nome", "Idade"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -214,43 +156,38 @@ public class ProfessorCrudView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(22, 22, 22)
-                            .addComponent(txtIdade))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(btnCadastro)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEdita)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jLabel4)
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                                .addComponent(btnVerRit, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtpid, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDeleta)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(32, 32, 32)
+                                .addComponent(btnCadastro)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEdita)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(90, 90, 90)
+                                        .addComponent(jLabel1))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnDeleta)
+                                        .addGap(30, 30, 30)
+                                        .addComponent(btnVerRit, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(28, 28, 28)
+                                        .addComponent(txtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 261, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -261,20 +198,17 @@ public class ProfessorCrudView extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel4)
-                    .addComponent(txtpid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesquisa)
-                    .addComponent(btnVerRit))
-                .addGap(47, 47, 47)
+                    .addComponent(txtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEdita, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeleta, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDeleta, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerRit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -289,23 +223,22 @@ public class ProfessorCrudView extends javax.swing.JFrame {
         String idade = txtIdade.getText();
         
         try {
-            pst = con.prepareStatement("INSERT INTO professor (nome,idade)VALUES(?,?)");
-            pst.setString(1, nome);
-            pst.setString(2, idade);
+            jdbc.pst = jdbc.con.prepareStatement("INSERT INTO professor (nome,idade)VALUES(?,?)");
+            jdbc.pst.setString(1, nome);
+            jdbc.pst.setString(2, idade);
             
-            int k = pst.executeUpdate();
+            int k = jdbc.pst.executeUpdate();
             
             if (k == 1){
                 JOptionPane.showMessageDialog(this, "Professor cadastrado com sucesso !");
                 txtNome.setText("");
                 txtIdade.setText("");
                 Fetch();
-                LoadProductNo();
             }else{
                 JOptionPane.showMessageDialog(this, "Houve um erro ao cadastrar o professor");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(productForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProfessorCrudView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnCadastroActionPerformed
 
@@ -313,39 +246,38 @@ public class ProfessorCrudView extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nome = txtNome.getText();
         String idade = txtIdade.getText();
-        String pid = txtpid.getSelectedItem().toString();
+//        String pid = txtpid.getSelectedItem().toString();
         
         try {
-            pst = con.prepareStatement("UPDATE professor SET nome=?,idade=? WHERE id=?");
+            jdbc.pst = jdbc.con.prepareStatement("UPDATE professor SET nome=?,idade=? WHERE id=?");
             
-            pst.setString(1, nome);
-            pst.setString(2, idade);
-            pst.setString(3, pid);
+            jdbc.pst.setString(1, nome);
+            jdbc.pst.setString(2, idade);
+            jdbc.pst.setString(3, pid);
             
-            int k = pst.executeUpdate();
+            int k = jdbc.pst.executeUpdate();
             if (k == 1){
                 JOptionPane.showMessageDialog(this, "O professor foi editado com sucesso !!");
                 txtNome.setText("");
                 txtIdade.setText("");
                 txtNome.requestFocus();
                 Fetch();
-                LoadProductNo();
             }else{
                 JOptionPane.showMessageDialog(this, "Deu ruim no update");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(productForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProfessorCrudView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnEditaActionPerformed
 
     private void btnDeletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletaActionPerformed
         // TODO add your handling code here:
-        String pid =  txtpid.getSelectedItem().toString();
+//        String pid =  txtpid.getSelectedItem().toString();
         try {
-            pst = con.prepareStatement("DELETE FROM professor WHERE id=?");
-            pst.setString(1, pid);
+            jdbc.pst = jdbc.con.prepareStatement("DELETE FROM professor WHERE id=?");
+            jdbc.pst.setString(1, pid);
             
-            int k = pst.executeUpdate();
+            int k = jdbc.pst.executeUpdate();
             
             if (k == 1){
                 JOptionPane.showMessageDialog(this, "Professor deletado com sucesso!");
@@ -353,47 +285,35 @@ public class ProfessorCrudView extends javax.swing.JFrame {
                 txtIdade.setText("");
                 txtNome.requestFocus();
                 Fetch();
-                LoadProductNo();
             }else{
                 JOptionPane.showMessageDialog(this, "Nao deu p deletar ):");
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(productForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProfessorCrudView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDeletaActionPerformed
 
-    private void btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaActionPerformed
-        // TODO add your handling code here:
-        String pid =  txtpid.getSelectedItem().toString();
-        
-        try {
-            pst = con.prepareStatement("SELECT * FROM professor WHERE id=?");
-            pst.setString(1,pid);
-            rs=pst.executeQuery();
-            
-            if(rs.next() == true){
-                txtNome.setText(rs.getString(2));
-                txtIdade.setText(rs.getString(3));
-            }else{
-                JOptionPane.showMessageDialog(this, "Não foi encontrado nenhum professor com esse ID");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(productForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnPesquisaActionPerformed
-
-    private void txtpidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpidActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtpidActionPerformed
-
     private void btnVerRitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerRitActionPerformed
         // TODO add your handling code here:
-        closeConnection();
-        String pid =  txtpid.getSelectedItem().toString();
+        jdbc.closeConnection();
         RitView tela = new RitView(Integer.parseInt(pid));
         tela.show();
     }//GEN-LAST:event_btnVerRitActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int selectedLineIndex = jTable1.getSelectedRow();
+        TableModel model = jTable1.getModel();
+        
+        pid = model.getValueAt(selectedLineIndex, 0).toString();
+        String nome = model.getValueAt(selectedLineIndex, 1).toString();
+        String idade = model.getValueAt(selectedLineIndex, 2).toString();
+        
+        
+        txtNome.setText(nome);
+        txtIdade.setText(idade);
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -435,17 +355,14 @@ public class ProfessorCrudView extends javax.swing.JFrame {
     private javax.swing.JButton btnCadastro;
     private javax.swing.JButton btnDeleta;
     private javax.swing.JButton btnEdita;
-    private javax.swing.JButton btnPesquisa;
     private javax.swing.JButton btnVerRit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtIdade;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JComboBox<String> txtpid;
     // End of variables declaration//GEN-END:variables
 }
