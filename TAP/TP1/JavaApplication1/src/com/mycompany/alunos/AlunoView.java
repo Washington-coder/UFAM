@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -23,29 +24,16 @@ public class AlunoView extends javax.swing.JFrame {
      * Creates new form AlunoView
      */
     private Integer professor_id;
+    private String pid;
     
     public AlunoView(Integer id) {
         professor_id = id;
         initComponents();
         jdbc.Connect();
         Fetch();
-        LoadProductNo();
     }
     
     ConnectionJdbc jdbc = new ConnectionJdbc();
-    
-    public void LoadProductNo(){
-        try {
-            jdbc.pst = jdbc.con.prepareStatement("SELECT id FROM alunos");
-            jdbc.rs = jdbc.pst.executeQuery();
-            txtpid.removeAllItems();
-            while(jdbc.rs.next()){
-                txtpid.addItem(jdbc.rs.getString(1));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(AlunoView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
     
     private void Fetch(){
         int q;
@@ -99,8 +87,6 @@ public class AlunoView extends javax.swing.JFrame {
         btnCadastra = new javax.swing.JButton();
         btnEdita = new javax.swing.JButton();
         btnDeleta = new javax.swing.JButton();
-        txtpid = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,6 +113,11 @@ public class AlunoView extends javax.swing.JFrame {
                 "ID", "Nome", "Matrícula", "Período", "Tipo de Aluno", "Idade"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         btnCadastra.setText("Cadastrar");
@@ -149,15 +140,6 @@ public class AlunoView extends javax.swing.JFrame {
                 btnDeletaActionPerformed(evt);
             }
         });
-
-        txtpid.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        txtpid.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpidActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("Pesquisar:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -203,11 +185,7 @@ public class AlunoView extends javax.swing.JFrame {
                                                 .addComponent(txtPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(30, 30, 30)
-                                        .addComponent(btnDeleta)
-                                        .addGap(113, 113, 113)
-                                        .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtpid, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(btnDeleta)))))))
                 .addContainerGap(93, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -233,9 +211,7 @@ public class AlunoView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastra)
                     .addComponent(btnEdita)
-                    .addComponent(btnDeleta)
-                    .addComponent(txtpid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(btnDeleta))
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42))
@@ -251,10 +227,7 @@ public class AlunoView extends javax.swing.JFrame {
         Integer periodo = Integer.parseInt(txtPeriodo.getText());
         String tipoAluno = txtTipoAluno.getText();
         Integer idade = Integer.parseInt(txtIdade.getText());
-        
-        
-        
-        
+      
         try {
             jdbc.pst = jdbc.con.prepareStatement("INSERT INTO alunos (id_tabela_aluno_prof,nome,matricula,periodo,tipo_aluno,idade)VALUES(?,?,?,?,?,?)");
             jdbc.pst.setInt(1, professor_id);
@@ -274,7 +247,6 @@ public class AlunoView extends javax.swing.JFrame {
                 txtTipoAluno.setText("");
                 txtIdade.setText("");
                 Fetch();
-                LoadProductNo();
             }else{
                 JOptionPane.showMessageDialog(this, "Houve um erro ao cadastrar a disciplina");
             }
@@ -292,13 +264,13 @@ public class AlunoView extends javax.swing.JFrame {
         Integer idade = Integer.parseInt(txtIdade.getText());
         
         try {
-            jdbc.pst = jdbc.con.prepareStatement("UPDATE professor SET nome=?,matricula=?,periodo=?,tipo_aluno=?,idade=? WHERE id=?");
+            jdbc.pst = jdbc.con.prepareStatement("UPDATE alunos SET nome=?,matricula=?,periodo=?,tipo_aluno=?,idade=? WHERE id=?");
            jdbc.pst.setString(1, nome); 
             jdbc.pst.setString(2, matricula);
             jdbc.pst.setInt(3, periodo);
             jdbc.pst.setString(4, tipoAluno);
             jdbc.pst.setFloat(5, idade);
-            jdbc.pst.setInt(6, professor_id);
+            jdbc.pst.setInt(6, Integer.parseInt(pid));
             
             int k = jdbc.pst.executeUpdate();
             if (k == 1){
@@ -309,7 +281,6 @@ public class AlunoView extends javax.swing.JFrame {
                 txtTipoAluno.setText("");
                 txtIdade.setText("");
                 Fetch();
-                LoadProductNo();
             }else{
                 JOptionPane.showMessageDialog(this, "Deu ruim no update");
             }
@@ -320,7 +291,6 @@ public class AlunoView extends javax.swing.JFrame {
 
     private void btnDeletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletaActionPerformed
         // TODO add your handling code here:
-        String pid =  txtpid.getSelectedItem().toString();
         try {
             jdbc.pst = jdbc.con.prepareStatement("DELETE FROM disciplina WHERE id=?");
             jdbc.pst.setString(1, pid);
@@ -335,9 +305,8 @@ public class AlunoView extends javax.swing.JFrame {
                 txtTipoAluno.setText("");
                 txtIdade.setText("");
                 Fetch();
-                LoadProductNo();
             }else{
-                JOptionPane.showMessageDialog(this, "Não foi possível deletar ):");
+                JOptionPane.showMessageDialog(this, "Não foi possível deletar");
             }
             
         } catch (SQLException ex) {
@@ -345,9 +314,25 @@ public class AlunoView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeletaActionPerformed
 
-    private void txtpidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpidActionPerformed
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtpidActionPerformed
+        int selectedLineIndex = jTable1.getSelectedRow();
+        TableModel model = jTable1.getModel();
+        
+        pid = model.getValueAt(selectedLineIndex, 0).toString();
+        String nome = model.getValueAt(selectedLineIndex, 1).toString();
+        String matricula = model.getValueAt(selectedLineIndex, 2).toString();
+        String periodo = model.getValueAt(selectedLineIndex, 3).toString();
+        String tipoAluno = model.getValueAt(selectedLineIndex, 4).toString();
+        String idade = model.getValueAt(selectedLineIndex, 5).toString();
+        
+        txtNome.setText(nome);
+        txtMatricula.setText(matricula);
+        txtPeriodo.setText(periodo);
+        txtTipoAluno.setText(tipoAluno);
+        txtIdade.setText(idade);
+        
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -395,7 +380,6 @@ public class AlunoView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtIdade;
@@ -403,6 +387,5 @@ public class AlunoView extends javax.swing.JFrame {
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPeriodo;
     private javax.swing.JTextField txtTipoAluno;
-    private javax.swing.JComboBox<String> txtpid;
     // End of variables declaration//GEN-END:variables
 }
