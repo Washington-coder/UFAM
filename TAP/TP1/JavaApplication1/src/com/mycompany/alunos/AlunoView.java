@@ -292,7 +292,7 @@ public class AlunoView extends javax.swing.JFrame {
     private void btnDeletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletaActionPerformed
         // TODO add your handling code here:
         try {
-            jdbc.pst = jdbc.con.prepareStatement("DELETE FROM disciplina WHERE id=?");
+            jdbc.pst = jdbc.con.prepareStatement("DELETE FROM alunos WHERE id=?");
             jdbc.pst.setString(1, pid);
             
             int k = jdbc.pst.executeUpdate();
