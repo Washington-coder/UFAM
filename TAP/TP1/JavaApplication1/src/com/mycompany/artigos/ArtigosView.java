@@ -91,12 +91,23 @@ public class ArtigosView extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtQtdCitacoes = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Artigos");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(412, 0, 63, 25);
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nome");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(34, 75, 33, 16);
+        getContentPane().add(txtNome);
+        txtNome.setBounds(34, 95, 140, 22);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -116,12 +127,17 @@ public class ArtigosView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(33, 257, 809, 402);
+
         btnCadastra.setText("Cadastrar");
         btnCadastra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastraActionPerformed(evt);
             }
         });
+        getContentPane().add(btnCadastra);
+        btnCadastra.setBounds(33, 151, 80, 47);
 
         btnEdita.setText("Editar");
         btnEdita.addActionListener(new java.awt.event.ActionListener() {
@@ -129,6 +145,8 @@ public class ArtigosView extends javax.swing.JFrame {
                 btnEditaActionPerformed(evt);
             }
         });
+        getContentPane().add(btnEdita);
+        btnEdita.setBounds(152, 153, 72, 43);
 
         btnDeleta.setText("Excluir");
         btnDeleta.addActionListener(new java.awt.event.ActionListener() {
@@ -136,10 +154,22 @@ public class ArtigosView extends javax.swing.JFrame {
                 btnDeletaActionPerformed(evt);
             }
         });
+        getContentPane().add(btnDeleta);
+        btnDeleta.setBounds(257, 152, 72, 45);
 
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Data");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(208, 75, 25, 16);
+        getContentPane().add(txtData);
+        txtData.setBounds(208, 95, 138, 22);
 
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Quantidade de citações");
+        getContentPane().add(jLabel8);
+        jLabel8.setBounds(378, 75, 124, 16);
+        getContentPane().add(txtQtdCitacoes);
+        txtQtdCitacoes.setBounds(378, 95, 124, 22);
 
         jButton1.setText("<");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -147,71 +177,13 @@ public class ArtigosView extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(0, 4, 50, 23);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addComponent(btnCadastra)
-                                .addGap(39, 39, 39)
-                                .addComponent(btnEdita)
-                                .addGap(33, 33, 33)
-                                .addComponent(btnDeleta))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(262, 262, 262)
-                                        .addComponent(jLabel1))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(68, 68, 68)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7)
-                                            .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(56, 56, 56)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtQtdCitacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel8))))))
-                        .addGap(0, 595, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1))
-                    .addComponent(jButton1))
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8))
-                .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtQtdCitacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCadastra, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdita, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeleta, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(60, 60, 60)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
-        );
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\washington.riega\\OneDrive - Venturus iTriad\\Área de Trabalho\\UFAM\\TAP\\TP1\\JavaApplication1\\Background_Banner2_Desktop.png")); // NOI18N
+        jLabel3.setText("jLabel3");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(0, -22, 940, 860);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -306,6 +278,7 @@ public class ArtigosView extends javax.swing.JFrame {
         // TODO add your handling code here:
         RitView tela = new RitView(professor_id);
         dispose();
+        setSize(986, 232);
         tela.show();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -382,6 +355,7 @@ public class ArtigosView extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;

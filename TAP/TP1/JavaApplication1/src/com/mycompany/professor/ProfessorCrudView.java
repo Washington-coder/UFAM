@@ -75,14 +75,19 @@ public class ProfessorCrudView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         txtIdade = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
+        btnVerRit = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btnVerRit = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Professores");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(292, 6, 99, 25);
 
         btnCadastro.setText("Cadastrar");
         btnCadastro.addActionListener(new java.awt.event.ActionListener() {
@@ -90,6 +95,8 @@ public class ProfessorCrudView extends javax.swing.JFrame {
                 btnCadastroActionPerformed(evt);
             }
         });
+        getContentPane().add(btnCadastro);
+        btnCadastro.setBounds(35, 110, 100, 46);
 
         btnEdita.setText("Editar");
         btnEdita.addActionListener(new java.awt.event.ActionListener() {
@@ -97,6 +104,8 @@ public class ProfessorCrudView extends javax.swing.JFrame {
                 btnEditaActionPerformed(evt);
             }
         });
+        getContentPane().add(btnEdita);
+        btnEdita.setBounds(160, 110, 80, 46);
 
         btnDeleta.setText("Deletar");
         btnDeleta.addActionListener(new java.awt.event.ActionListener() {
@@ -104,10 +113,31 @@ public class ProfessorCrudView extends javax.swing.JFrame {
                 btnDeletaActionPerformed(evt);
             }
         });
+        getContentPane().add(btnDeleta);
+        btnDeleta.setBounds(250, 110, 90, 46);
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nome:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(35, 66, 35, 16);
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Idade:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(353, 66, 33, 16);
+        getContentPane().add(txtNome);
+        txtNome.setBounds(95, 63, 174, 22);
+        getContentPane().add(txtIdade);
+        txtIdade.setBounds(403, 63, 174, 22);
+
+        btnVerRit.setText("Ver RIT");
+        btnVerRit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerRitActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnVerRit);
+        btnVerRit.setBounds(360, 110, 95, 46);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,92 +157,13 @@ public class ProfessorCrudView extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable1);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(35, 174, 614, 324);
 
-        btnVerRit.setText("Ver RIT");
-        btnVerRit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerRitActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addComponent(btnCadastro)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEdita)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(90, 90, 90)
-                                        .addComponent(jLabel1))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnDeleta)
-                                        .addGap(30, 30, 30)
-                                        .addComponent(btnVerRit, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(28, 28, 28)
-                                        .addComponent(txtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 261, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdita, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeleta, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVerRit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\washington.riega\\OneDrive - Venturus iTriad\\Área de Trabalho\\UFAM\\TAP\\TP1\\JavaApplication1\\Background_Banner2_Desktop.png")); // NOI18N
+        jLabel4.setText("jLabel4");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(0, -10, 690, 840);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -299,6 +250,7 @@ public class ProfessorCrudView extends javax.swing.JFrame {
         jdbc.closeConnection();
         RitView tela = new RitView(Integer.parseInt(pid));
         dispose();
+        setSize(986, 232);
         tela.show();
     }//GEN-LAST:event_btnVerRitActionPerformed
 
@@ -360,7 +312,7 @@ public class ProfessorCrudView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtIdade;

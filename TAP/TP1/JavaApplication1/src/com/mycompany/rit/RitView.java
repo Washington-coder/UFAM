@@ -43,10 +43,18 @@ public class RitView extends javax.swing.JFrame {
         btnArtigos = new javax.swing.JButton();
         btnAtividades = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(986, 232));
+        setSize(new java.awt.Dimension(0, 0));
+        getContentPane().setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Relatórios Individuais de Trabalho");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(340, 10, 294, 25);
 
         btnDisciplinas.setText("Disciplinas Ministradas");
         btnDisciplinas.addActionListener(new java.awt.event.ActionListener() {
@@ -54,6 +62,8 @@ public class RitView extends javax.swing.JFrame {
                 btnDisciplinasActionPerformed(evt);
             }
         });
+        getContentPane().add(btnDisciplinas);
+        btnDisciplinas.setBounds(126, 114, 149, 49);
 
         btnAlunos.setText("Alunos Orientados");
         btnAlunos.addActionListener(new java.awt.event.ActionListener() {
@@ -61,6 +71,8 @@ public class RitView extends javax.swing.JFrame {
                 btnAlunosActionPerformed(evt);
             }
         });
+        getContentPane().add(btnAlunos);
+        btnAlunos.setBounds(307, 114, 129, 49);
 
         btnArtigos.setText("Artigos Publicados");
         btnArtigos.addActionListener(new java.awt.event.ActionListener() {
@@ -68,6 +80,8 @@ public class RitView extends javax.swing.JFrame {
                 btnArtigosActionPerformed(evt);
             }
         });
+        getContentPane().add(btnArtigos);
+        btnArtigos.setBounds(478, 114, 129, 49);
 
         btnAtividades.setText("Atividades de Coordenação");
         btnAtividades.addActionListener(new java.awt.event.ActionListener() {
@@ -75,6 +89,8 @@ public class RitView extends javax.swing.JFrame {
                 btnAtividadesActionPerformed(evt);
             }
         });
+        getContentPane().add(btnAtividades);
+        btnAtividades.setBounds(659, 114, 176, 49);
 
         btnVoltar.setText("<");
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -82,44 +98,13 @@ public class RitView extends javax.swing.JFrame {
                 btnVoltarActionPerformed(evt);
             }
         });
+        getContentPane().add(btnVoltar);
+        btnVoltar.setBounds(0, 4, 50, 23);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnVoltar)
-                        .addGap(248, 248, 248)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(btnDisciplinas)
-                        .addGap(38, 38, 38)
-                        .addComponent(btnAlunos)
-                        .addGap(31, 31, 31)
-                        .addComponent(btnArtigos)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAtividades)))
-                .addContainerGap(57, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel1))
-                    .addComponent(btnVoltar))
-                .addGap(75, 75, 75)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDisciplinas, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnArtigos, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAtividades, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(69, Short.MAX_VALUE))
-        );
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\washington.riega\\OneDrive - Venturus iTriad\\Área de Trabalho\\UFAM\\TAP\\TP1\\JavaApplication1\\Background_Banner2_Desktop.png")); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(1, -4, 1880, 250);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -128,35 +113,40 @@ public class RitView extends javax.swing.JFrame {
         // TODO add your handling code here:
         DisciplinaView tela = new DisciplinaView(professor_id);
         dispose();
-        tela.show();
+        tela.setSize(957, 712);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnDisciplinasActionPerformed
 
     private void btnAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlunosActionPerformed
         // TODO add your handling code here:
         AlunoView tela = new AlunoView(professor_id);
         dispose();
-        tela.show();
+        tela.setSize(957, 712);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnAlunosActionPerformed
 
     private void btnArtigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtigosActionPerformed
         // TODO add your handling code here:
         ArtigosView tela = new ArtigosView(professor_id);
         dispose();
-        tela.show();
+        tela.setSize(957, 712);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnArtigosActionPerformed
 
     private void btnAtividadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtividadesActionPerformed
         // TODO add your handling code here:
         AtvCoordView tela = new AtvCoordView(professor_id);
         dispose();
-        tela.show();
+        tela.setSize(957, 712);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnAtividadesActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         // TODO add your handling code here:
         ProfessorCrudView tela = new ProfessorCrudView();
         dispose();
-        tela.show();
+        tela.setSize(682, 546);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
@@ -208,5 +198,6 @@ public class RitView extends javax.swing.JFrame {
     private javax.swing.JButton btnDisciplinas;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

@@ -89,20 +89,51 @@ public class AlunoView extends javax.swing.JFrame {
         btnEdita = new javax.swing.JButton();
         btnDeleta = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Alunos");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(400, 10, 110, 25);
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nome:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(34, 54, 35, 16);
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Matricula:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(34, 107, 51, 16);
 
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Período:");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(568, 54, 44, 16);
 
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Tipo de Aluno:");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(271, 54, 77, 16);
 
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Idade:");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(271, 107, 33, 16);
+        getContentPane().add(txtNome);
+        txtNome.setBounds(99, 51, 118, 22);
+        getContentPane().add(txtMatricula);
+        txtMatricula.setBounds(99, 104, 118, 22);
+        getContentPane().add(txtPeriodo);
+        txtPeriodo.setBounds(630, 51, 118, 22);
+        getContentPane().add(txtTipoAluno);
+        txtTipoAluno.setBounds(366, 51, 122, 22);
+        getContentPane().add(txtIdade);
+        txtIdade.setBounds(366, 104, 122, 22);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -122,12 +153,17 @@ public class AlunoView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(34, 247, 763, 402);
+
         btnCadastra.setText("Cadastrar");
         btnCadastra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastraActionPerformed(evt);
             }
         });
+        getContentPane().add(btnCadastra);
+        btnCadastra.setBounds(34, 181, 80, 40);
 
         btnEdita.setText("Editar");
         btnEdita.addActionListener(new java.awt.event.ActionListener() {
@@ -135,6 +171,8 @@ public class AlunoView extends javax.swing.JFrame {
                 btnEditaActionPerformed(evt);
             }
         });
+        getContentPane().add(btnEdita);
+        btnEdita.setBounds(145, 181, 72, 40);
 
         btnDeleta.setText("Deletar");
         btnDeleta.addActionListener(new java.awt.event.ActionListener() {
@@ -142,6 +180,8 @@ public class AlunoView extends javax.swing.JFrame {
                 btnDeletaActionPerformed(evt);
             }
         });
+        getContentPane().add(btnDeleta);
+        btnDeleta.setBounds(247, 181, 72, 40);
 
         btnVoltar.setText("<");
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -149,86 +189,13 @@ public class AlunoView extends javax.swing.JFrame {
                 btnVoltarActionPerformed(evt);
             }
         });
+        getContentPane().add(btnVoltar);
+        btnVoltar.setBounds(0, 0, 50, 23);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnVoltar)
-                        .addGap(342, 342, 342)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 763, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnCadastra)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnEdita))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel2))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(54, 54, 54)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel6))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(txtTipoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(80, 80, 80)
-                                                .addComponent(jLabel4)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txtPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(30, 30, 30)
-                                        .addComponent(btnDeleta)))))))
-                .addContainerGap(93, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel1))
-                    .addComponent(btnVoltar))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTipoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel6)
-                    .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCadastra)
-                    .addComponent(btnEdita)
-                    .addComponent(btnDeleta))
-                .addGap(43, 43, 43)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
-        );
+        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\washington.riega\\OneDrive - Venturus iTriad\\Área de Trabalho\\UFAM\\TAP\\TP1\\JavaApplication1\\Background_Banner2_Desktop.png")); // NOI18N
+        jLabel7.setText("jLabel7");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(0, -12, 890, 840);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -351,6 +318,7 @@ public class AlunoView extends javax.swing.JFrame {
         // TODO add your handling code here:
         RitView tela = new RitView(professor_id);
         dispose();
+        setSize(986, 232);
         tela.show();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
@@ -401,6 +369,7 @@ public class AlunoView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtIdade;

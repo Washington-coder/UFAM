@@ -32,48 +32,34 @@ public class MainView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnListProfessors = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1000, 800));
+        getContentPane().setLayout(null);
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Bem-vindo ao");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(476, 207, 75, 16);
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Sistema de Gerenciamento de Relatórios Individuais de Trabalho");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(358, 273, 400, 16);
 
-        btnListProfessors.setText("Consultar professores");
+        btnListProfessors.setText("Começar");
         btnListProfessors.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnListProfessorsActionPerformed(evt);
             }
         });
+        getContentPane().add(btnListProfessors);
+        btnListProfessors.setBounds(440, 380, 153, 75);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(217, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(216, 216, 216))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addComponent(btnListProfessors, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(86, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(88, 88, 88)
-                .addComponent(btnListProfessors, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(112, Short.MAX_VALUE))
-        );
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\washington.riega\\OneDrive - Venturus iTriad\\Área de Trabalho\\UFAM\\TAP\\TP1\\JavaApplication1\\Background_Banner2_Desktop.png")); // NOI18N
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(0, 0, 1000, 800);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -81,7 +67,8 @@ public class MainView extends javax.swing.JFrame {
     private void btnListProfessorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListProfessorsActionPerformed
         ProfessorCrudView tela = new ProfessorCrudView();
         dispose();
-        tela.show();
+        tela.setSize(682, 546);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnListProfessorsActionPerformed
 
     /**
@@ -123,5 +110,6 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton btnListProfessors;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }
