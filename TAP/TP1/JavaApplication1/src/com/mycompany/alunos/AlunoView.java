@@ -5,6 +5,7 @@
 package com.mycompany.alunos;
 
 import com.mycompany.connection.ConnectionJdbc;
+import com.mycompany.rit.RitView;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -87,6 +88,7 @@ public class AlunoView extends javax.swing.JFrame {
         btnCadastra = new javax.swing.JButton();
         btnEdita = new javax.swing.JButton();
         btnDeleta = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -141,6 +143,13 @@ public class AlunoView extends javax.swing.JFrame {
             }
         });
 
+        btnVoltar.setText("<");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -148,7 +157,8 @@ public class AlunoView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(417, 417, 417)
+                        .addComponent(btnVoltar)
+                        .addGap(342, 342, 342)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
@@ -191,8 +201,11 @@ public class AlunoView extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel1))
+                    .addComponent(btnVoltar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -334,6 +347,13 @@ public class AlunoView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        // TODO add your handling code here:
+        RitView tela = new RitView(professor_id);
+        dispose();
+        tela.show();
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -374,6 +394,7 @@ public class AlunoView extends javax.swing.JFrame {
     private javax.swing.JButton btnCadastra;
     private javax.swing.JButton btnDeleta;
     private javax.swing.JButton btnEdita;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

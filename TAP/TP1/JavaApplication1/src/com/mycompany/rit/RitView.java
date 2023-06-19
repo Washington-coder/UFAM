@@ -8,6 +8,7 @@ import com.company.atvcoord.AtvCoordView;
 import com.mycompany.alunos.AlunoView;
 import com.mycompany.artigos.ArtigosView;
 import com.mycompany.disciplina.DisciplinaView;
+import com.mycompany.professor.ProfessorCrudView;
 
 /**
  *
@@ -37,40 +38,48 @@ public class RitView extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnDisciplinas = new javax.swing.JButton();
+        btnAlunos = new javax.swing.JButton();
+        btnArtigos = new javax.swing.JButton();
+        btnAtividades = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Relatórios Individuais de Trabalho");
 
-        jButton1.setText("Disciplinas Ministradas");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnDisciplinas.setText("Disciplinas Ministradas");
+        btnDisciplinas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnDisciplinasActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Alunos Orientados");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAlunos.setText("Alunos Orientados");
+        btnAlunos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnAlunosActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Artigos Publicados");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnArtigos.setText("Artigos Publicados");
+        btnArtigos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnArtigosActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Atividades de Coordenação");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnAtividades.setText("Atividades de Coordenação");
+        btnAtividades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnAtividadesActionPerformed(evt);
+            }
+        });
+
+        btnVoltar.setText("<");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
             }
         });
 
@@ -81,59 +90,74 @@ public class RitView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(323, 323, 323)
+                        .addComponent(btnVoltar)
+                        .addGap(248, 248, 248)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(63, 63, 63)
-                        .addComponent(jButton1)
+                        .addComponent(btnDisciplinas)
                         .addGap(38, 38, 38)
-                        .addComponent(jButton2)
+                        .addComponent(btnAlunos)
                         .addGap(31, 31, 31)
-                        .addComponent(jButton3)
+                        .addComponent(btnArtigos)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4)))
+                        .addComponent(btnAtividades)))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel1))
+                    .addComponent(btnVoltar))
                 .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDisciplinas, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnArtigos, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAtividades, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnDisciplinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisciplinasActionPerformed
         // TODO add your handling code here:
         DisciplinaView tela = new DisciplinaView(professor_id);
+        dispose();
         tela.show();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnDisciplinasActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlunosActionPerformed
         // TODO add your handling code here:
         AlunoView tela = new AlunoView(professor_id);
+        dispose();
         tela.show();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnAlunosActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnArtigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtigosActionPerformed
         // TODO add your handling code here:
         ArtigosView tela = new ArtigosView(professor_id);
+        dispose();
         tela.show();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnArtigosActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnAtividadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtividadesActionPerformed
         // TODO add your handling code here:
         AtvCoordView tela = new AtvCoordView(professor_id);
+        dispose();
         tela.show();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnAtividadesActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        // TODO add your handling code here:
+        ProfessorCrudView tela = new ProfessorCrudView();
+        dispose();
+        tela.show();
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,10 +202,11 @@ public class RitView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnAlunos;
+    private javax.swing.JButton btnArtigos;
+    private javax.swing.JButton btnAtividades;
+    private javax.swing.JButton btnDisciplinas;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

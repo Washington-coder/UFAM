@@ -7,6 +7,7 @@ package com.company.atvcoord;
 import com.mycompany.artigos.*;
 import com.mycompany.disciplina.*;
 import com.mycompany.connection.ConnectionJdbc;
+import com.mycompany.rit.RitView;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -90,6 +91,7 @@ public class AtvCoordView extends javax.swing.JFrame {
         txtDataEvento = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtOrcamentoEvento = new javax.swing.JTextField();
+        btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -140,46 +142,58 @@ public class AtvCoordView extends javax.swing.JFrame {
 
         jLabel8.setText("Orçamento para o evento");
 
+        btnVoltar.setText("<");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCadastra)
-                        .addGap(39, 39, 39)
-                        .addComponent(btnEdita)
-                        .addGap(33, 33, 33)
-                        .addComponent(btnDeleta))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(262, 262, 262)
-                                .addComponent(jLabel1))
+                                .addGap(33, 33, 33)
+                                .addComponent(btnCadastra)
+                                .addGap(39, 39, 39)
+                                .addComponent(btnEdita)
+                                .addGap(33, 33, 33)
+                                .addComponent(btnDeleta))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(68, 68, 68)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnVoltar, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(txtDataEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(56, 56, 56)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtOrcamentoEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8))))))
-                .addContainerGap(547, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(262, 262, 262)
+                                        .addComponent(jLabel1))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(68, 68, 68)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(txtDataEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(56, 56, 56)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtOrcamentoEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel8))))))
+                        .addGap(0, 574, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel1))
+                    .addComponent(btnVoltar))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -289,6 +303,13 @@ public class AtvCoordView extends javax.swing.JFrame {
         txtOrcamentoEvento.setText(orcamento);        
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        // TODO add your handling code here:
+        RitView tela = new RitView(professor_id);
+        dispose();
+        tela.show();
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -391,6 +412,7 @@ public class AtvCoordView extends javax.swing.JFrame {
     private javax.swing.JButton btnCadastra;
     private javax.swing.JButton btnDeleta;
     private javax.swing.JButton btnEdita;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;

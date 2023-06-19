@@ -298,6 +298,7 @@ public class ProfessorCrudView extends javax.swing.JFrame {
         // TODO add your handling code here:
         jdbc.closeConnection();
         RitView tela = new RitView(Integer.parseInt(pid));
+        dispose();
         tela.show();
     }//GEN-LAST:event_btnVerRitActionPerformed
 
