@@ -4,6 +4,7 @@
  */
 package com.mycompany.rit;
 
+import com.company.atvcoord.AtvCoordView;
 import com.mycompany.alunos.AlunoView;
 import com.mycompany.artigos.ArtigosView;
 import com.mycompany.disciplina.DisciplinaView;
@@ -130,6 +131,8 @@ public class RitView extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        AtvCoordView tela = new AtvCoordView(professor_id);
+        tela.show();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
